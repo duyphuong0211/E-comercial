@@ -1,5 +1,6 @@
 package com.Ecomercial.CTTT2018.dao;
 
+
 import com.Ecomercial.CTTT2018.entity.Entity;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 @Repository
 @Qualifier("fakeData")
-public class EntityDaoImp implements EntityDao{
+public class FakeEntityDaoImpl implements EntityDao {
 
     private static Map<Integer, Entity> entities;
 
@@ -19,9 +20,9 @@ public class EntityDaoImp implements EntityDao{
         entities = new HashMap<Integer, Entity>() {
 
             {
-                put(1, new Entity(1, "dp1", "Desc for first entity"));
-                put(2, new Entity(2, "dp2", "Desc for second entity"));
-                put(3, new Entity(3, "dp3", "Desc for third entity"));
+                put(1, new Entity(1, "Toba", "Desc for first entity"));
+                put(2, new Entity(2, "Wara2a", "Desc for second entity"));
+                put(3, new Entity(3, "Ma2as", "Desc for third entity"));
             }
         };
     }
@@ -53,6 +54,4 @@ public class EntityDaoImp implements EntityDao{
     public void insertEntityToDb(Entity entity) {
         entities.put(entity.getId(), entity);
     }
-
-
 }

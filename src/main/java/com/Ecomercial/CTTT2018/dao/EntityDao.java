@@ -5,7 +5,6 @@ import com.Ecomercial.CTTT2018.entity.Entity;
 import java.util.Collection;
 
 public interface EntityDao {
-
     Collection<Entity> getAllEntities();
 
     Entity getEntityById(int id);

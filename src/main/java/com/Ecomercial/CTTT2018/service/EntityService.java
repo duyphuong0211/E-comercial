@@ -10,6 +10,7 @@ import java.util.Collection;
 
 @Service
 public class EntityService {
+
     @Autowired
     @Qualifier("fakeData")
     private EntityDao entityDao;
