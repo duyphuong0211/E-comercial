@@ -1,18 +1,16 @@
 package com.Ecomercial.CTTT2018.dao;
 
-import com.Ecomercial.CTTT2018.entity.Entity;
-import com.Ecomercial.CTTT2018.entity.User;
 
 import java.util.Collection;
 
-public interface EntityDao {
-    Collection<User> getAllEntities();
+public interface EntityDao<T> {
+    Collection<T> getAllEntities();
 
-    User getEntityById(int id);
+    T getEntityById(String  id);
 
-    void removeEntityById(int id);
+    boolean removeEntityById(String id);
 
-    void updateEntity(User entity);
+    boolean updateEntity(T entity);
 
-    void insertEntityToDb(User entity);
+    boolean insertEntityToDb(T entity);
 }

@@ -1,7 +1,6 @@
 package com.Ecomercial.CTTT2018.controller;
 
 import com.Ecomercial.CTTT2018.entity.User;
-import com.Ecomercial.CTTT2018.service.EntityService;
 import com.Ecomercial.CTTT2018.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,34 +8,56 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-//	@RequestMapping("/all")
-//	public List<User> getall() {
-//		return users;
-//	}
+	@RequestMapping(value = "/login",method = RequestMethod.GET)
+	public String login()
+	{
+		return "user/login";
+	}
 
-    //view in web
-    @RequestMapping(value = "/register")
-    public String register(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("title","Register");
-        return "entities/register";
-    }
+	@RequestMapping(value= "/login",method = RequestMethod.POST)
+	public String login(HttpServletRequest request, Model model)
+	{
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute User user) {
-        userService.addUser(user);
-        return "entities/register";
-    }
+		if(userService.login(username, password))
+		{
+			//TODO SET SESSIONS OR WHTVR TO MAKE U LOGIN
+			model.addAttribute("username",username);
+			model.addAttribute("title",username);
+			return "user/profile";
+		}
+		else {
+			model.addAttribute("message","Wrong Username or password");
+			return "user/login";
+		}
+	}
+
+	@RequestMapping(value = "/register")
+	public String register(Model model) {
+		return "user/register";
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String register(@ModelAttribute User user, HttpServletRequest request, Model model) {
+		String confirmPassword = request.getParameter("confirmPassword");
+		if(userService.register(user, confirmPassword))
+		{
+			//TODO FFS THIS SPRING SHIT IS FUCKING RETARDED IT REDIRECTS USING CONTEXT PATH FFFSFS!#$!#
+			return "redirect: .../";
+		}
+		model.addAttribute("message","Failed to Register, hanl2y tare2a ngeb howa failed leh bezabt ba3den");
+		return "user/register";
+	}
 
 }
