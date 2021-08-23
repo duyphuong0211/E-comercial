@@ -29,6 +29,7 @@ public class UserController {
     public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("title","Register");
         return "entities/register";
     }
 
