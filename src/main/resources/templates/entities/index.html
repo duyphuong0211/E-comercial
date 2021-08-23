@@ -1,17 +1,23 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>All Entities</title>
+<head th:replace="entities/layout :: header">
 </head>
 <body>
-
-<th:block th:each="entity : ${entities}">
-    <p th:text="${entity.id}" />
-    <p th:text="${entity.name} + ' ' + ${entity.desc}"> </p>
-    <br/>
-</th:block>
-
+<header class="masthead text-center text-white">
+    <div class="masthead-content">
+        <div class="container">
+            <h1 class="masthead-heading mb-0">One Page Wonder</h1>
+            <h2 class="masthead-subheading mb-0">Will Rock Your Socks Off</h2>
+            <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
+        </div>
+    </div>
+    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+</header>
 </body>
+
+<div th:replace="entities/layout ::footer"></div>
 
 </html>
