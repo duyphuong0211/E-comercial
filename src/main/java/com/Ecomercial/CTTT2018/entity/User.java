@@ -19,6 +19,11 @@ public class User  {
         this.email = email;
     }
 
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return ((this.username.equals(((User) obj).username)
