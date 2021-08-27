@@ -25,6 +25,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				//Homepage
 				.antMatchers("/").permitAll()
+				.antMatchers("/register").permitAll()
 				//Static Resource
 				.antMatchers("/css/**", "/images/**", "/js/**", "/bootstrap/**").permitAll()
 				//.antMatchers("/example/**").hasAuthority("ADMIN")

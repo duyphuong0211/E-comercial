@@ -12,6 +12,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -57,7 +59,7 @@ public class AccountController {
 
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ModelAndView register(@Valid @ModelAttribute("registerForm") UserCreateForm registerForm, BindingResult bindingResult) {
+	public ModelAndView register(@Valid @ModelAttribute("registerForm") UserCreateForm registerForm, BindingResult bindingResult, HttpServletRequest request) {
 
 		logger.info("Show register page");
 		if (bindingResult.hasErrors())
@@ -65,6 +67,14 @@ public class AccountController {
 
 		//Save to DB
 		userService.register(registerForm);
+
+		//Login
+		try {
+			request.changeSessionId();
+			request.login(registerForm.getUsername(), registerForm.getPassword());
+		} catch (ServletException e) {
+			e.printStackTrace();
+		}
 
 		return new ModelAndView("redirect:/");
 	}
