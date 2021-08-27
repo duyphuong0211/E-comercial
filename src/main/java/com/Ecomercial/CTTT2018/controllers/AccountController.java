@@ -3,6 +3,8 @@ package com.Ecomercial.CTTT2018.controllers;
 import com.Ecomercial.CTTT2018.UserCreateFormValidator;
 import com.Ecomercial.CTTT2018.forms.UserCreateForm;
 import com.Ecomercial.CTTT2018.models.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import java.util.Optional;
 
 @Controller
 public class AccountController {
+
+	Logger logger = LoggerFactory.getLogger(AccountController.class);
 	/////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
 	@Autowired
 	private UserService userService;
@@ -36,6 +40,8 @@ public class AccountController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+
+		logger.info("Show login page");
 		return new ModelAndView("user/login", "error", error);
 	}
 
@@ -44,12 +50,16 @@ public class AccountController {
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView register(@ModelAttribute("registerForm") UserCreateForm registerForm) {
+
+		logger.info("Show register page");
 		return new ModelAndView("user/register", "registerForm", registerForm);
 	}
 
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView register(@Valid @ModelAttribute("registerForm") UserCreateForm registerForm, BindingResult bindingResult) {
+
+		logger.info("Show register page");
 		if (bindingResult.hasErrors())
 			return new ModelAndView("user/register", "registerForm", registerForm);
 

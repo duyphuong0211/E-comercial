@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <th:block layout:fragment="customStyle">
         <!--El Custom Styles le el 7eta deh-->
         <!-- <link rel="stylesheet" th:href="@{/css/home.css}"> -->
@@ -14,7 +14,9 @@
 <body layout:fragment="content">
 <!--Content Goes Here!-->
 
-<h1 th:text=" 'welcome, '+ ${username}"></h1>
+<h1 th:text=" 'Name: '+ ${name}"></h1>
+<h2 th:text=" 'Username: '+ ${username}"></h2>
+<h3 th:text=" 'Email: '+ ${email}"></h3>
 
 
 <!--El Custom Scripts le el 7eta deh-->

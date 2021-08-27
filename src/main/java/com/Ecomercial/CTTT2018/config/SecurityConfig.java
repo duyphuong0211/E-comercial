@@ -11,9 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(100)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
