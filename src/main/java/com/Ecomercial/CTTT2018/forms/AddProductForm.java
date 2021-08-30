@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class AddProductForm {
 
-    @NotEmpty
+
     private String name = "";
 
-    @NotEmpty
+
     private String brand = "";
 
-    @NotNull
+
     @Min(0)
     private Float price ;
 

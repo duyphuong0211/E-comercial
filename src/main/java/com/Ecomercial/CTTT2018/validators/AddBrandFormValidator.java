@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-@Component
-public class AddBrandFormValidator implements Validator {
+@Component("AddBrandFormValidator")
+public class AddBrandFormValidator implements Validator{
 
     @Autowired
     private BrandRepository brandRepository;
@@ -19,7 +19,7 @@ public class AddBrandFormValidator implements Validator {
         return clazz.equals(AddBrandForm.class);
     }
 
-    public void validate(Object target, Errors errors)
+    public void validate(Object target,Errors errors)
     {
         AddBrandForm form =(AddBrandForm) target;
         validateName(errors,form);

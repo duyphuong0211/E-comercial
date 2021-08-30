@@ -6,6 +6,8 @@ import com.Ecomercial.CTTT2018.forms.AddProductForm;
 import com.Ecomercial.CTTT2018.models.service.BrandService;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.validators.AddProductFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
+
 
 @Controller
 public class AdminController {
+
+    Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     /////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
     @Autowired
@@ -56,6 +61,8 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addbrand", method = RequestMethod.GET)
     public ModelAndView addBrand(@ModelAttribute("addBrandForm") AddBrandForm addBrandForm) {
+
+        logger.info("show addbrand page1");
         return new ModelAndView("admin/addbrand", "addBrandForm", addBrandForm);
     }
 
@@ -63,6 +70,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/addbrand", method = RequestMethod.POST)
     public ModelAndView addBrand(@Valid @ModelAttribute("addBrandForm")AddBrandForm addBrandForm, BindingResult bindingResult)
     {
+        logger.info("show addbrand page2");
         if(bindingResult.hasErrors())
             return new ModelAndView("admin/addbrand","addBrandForm",addBrandForm);
         brandService.addBrand(addBrandForm);
@@ -72,12 +80,16 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.GET)
     public ModelAndView addProduct(@ModelAttribute("addProductForm") AddProductForm addProductForm) {
+
+        logger.info("show addproduct page");
         return new ModelAndView("admin/addproduct", "addProductForm", addProductForm);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.POST)
     public ModelAndView addProduct(@Valid @ModelAttribute("addProductForm") AddProductForm addProductForm, BindingResult bindingResult) {
+
+        logger.info("show addproduct page2");
         if (bindingResult.hasErrors())
             return new ModelAndView("admin/addproduct", "addProductForm", addProductForm);
 

@@ -1,8 +1,9 @@
 package com.Ecomercial.CTTT2018.controllers;
 
-import com.Ecomercial.CTTT2018.UserCreateFormValidator;
+
 import com.Ecomercial.CTTT2018.forms.UserCreateForm;
 import com.Ecomercial.CTTT2018.models.service.UserService;
+import com.Ecomercial.CTTT2018.validators.UserCreateFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

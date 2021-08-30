@@ -1,4 +1,4 @@
-package com.Ecomercial.CTTT2018;
+package com.Ecomercial.CTTT2018.validators;
 
 import com.Ecomercial.CTTT2018.forms.UserCreateForm;
 import com.Ecomercial.CTTT2018.models.repository.UserRepository;
@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-@Component
+@Component("UserCreateFormValidator")
 public class UserCreateFormValidator implements Validator {
+
 	@Autowired
 	private UserRepository userRepository;
 
