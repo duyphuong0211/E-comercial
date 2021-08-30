@@ -17,11 +17,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository){this.productRepository=productRepository;}
+    public ProductServiceImpl(ProductRepository productRepository){this.productRepository = productRepository;}
+
 
     @Override
     public Optional<Product> getProductById(long id) {
-        return Optional.ofNullable(productRepository.findOne(id));
+        return Optional.empty();
     }
 
     @Override
@@ -40,12 +41,13 @@ public class ProductServiceImpl implements ProductService {
     {
         return productRepository.findAll();
     }
+
     @Override
     public Product addProduct(AddProductForm productForm) {
         Product product=new Product();
         product.setBrand(productForm.getBrand());
         product.setName(productForm.getName());
-        product.setPrice(Double.parseDouble(productForm.getPrice()));
+        product.setPrice(productForm.getPrice());
         product.setDateTime(new Date());
         return productRepository.save(product);
     }

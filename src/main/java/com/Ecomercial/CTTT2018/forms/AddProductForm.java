@@ -3,10 +3,12 @@ package com.Ecomercial.CTTT2018.forms;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Getter
 @Setter
+@Getter
 public class AddProductForm {
 
     @NotEmpty
@@ -15,16 +17,8 @@ public class AddProductForm {
     @NotEmpty
     private String brand = "";
 
-    @NotEmpty
-    String  price ;
-
-    @Override
-    public String toString() {
-        return "AddProductForm{" +
-                "name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
-                ", price=" + price +
-                '}';
-    }
+    @NotNull
+    @Min(0)
+    private Float price ;
 
 }

@@ -8,10 +8,14 @@ import java.util.Optional;
 
 public interface ProductService {
 
-    Optional<Product> getProductById(long id);
+    Optional<Product>getProductById(long id);
+
     Optional<Product>getProductByName(String name);
+
     Optional<Product>getPriceBetween(double start,double end);
-    Collection<Product> getAllProducts();
+
+    Collection<Product>getAllProducts();
+
     Product addProduct(AddProductForm productForm);
 
 }

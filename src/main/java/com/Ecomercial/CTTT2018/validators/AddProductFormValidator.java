@@ -27,8 +27,13 @@ public class AddProductFormValidator implements Validator {
 
     private void validatePrice(Errors errors,AddProductForm form)
     {
-        if(Double.parseDouble(form.getPrice())<0)
-            errors.rejectValue("price","msg.Negative");
+        //Avoid if it is Null
+        if(errors.hasFieldErrors("price"))
+            return;
+
+        if(form.getPrice() < 0)
+            errors.rejectValue("price","msg.PriceNegative");
+
     }
 
 }

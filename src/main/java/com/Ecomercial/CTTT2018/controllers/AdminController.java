@@ -22,14 +22,17 @@ import javax.validation.Valid;
 
 @Controller
 public class AdminController {
+
     /////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
     @Autowired
     private BrandService brandService;
+
     @Autowired
     private ProductService productService;
 
     @Autowired
     private AddBrandFormValidator brandFormValidator;
+
     @Autowired
     private AddProductFormValidator addProductFormValidator;
 
@@ -55,6 +58,7 @@ public class AdminController {
     public ModelAndView addBrand(@ModelAttribute("addBrandForm") AddBrandForm addBrandForm) {
         return new ModelAndView("admin/addbrand", "addBrandForm", addBrandForm);
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addbrand", method = RequestMethod.POST)
     public ModelAndView addBrand(@Valid @ModelAttribute("addBrandForm")AddBrandForm addBrandForm, BindingResult bindingResult)
@@ -64,7 +68,6 @@ public class AdminController {
         brandService.addBrand(addBrandForm);
         return new ModelAndView("redirect:/");
     }
-
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.GET)
@@ -77,7 +80,9 @@ public class AdminController {
     public ModelAndView addProduct(@Valid @ModelAttribute("addProductForm") AddProductForm addProductForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return new ModelAndView("admin/addproduct", "addProductForm", addProductForm);
+
         productService.addProduct(addProductForm);
+
         return new ModelAndView("redirect:/");
     }
 }
