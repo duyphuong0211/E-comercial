@@ -29,7 +29,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//Static Resource
 				.antMatchers("/css/**", "/images/**", "/js/**", "/bootstrap/**").permitAll()
 				//.antMatchers("/example/**").hasAuthority("ADMIN")
-				.anyRequest().fullyAuthenticated()
+				.anyRequest().authenticated() // Ask for authentication on every request except filtered
 				.and()
 				.formLogin()
 				.loginPage("/login")
