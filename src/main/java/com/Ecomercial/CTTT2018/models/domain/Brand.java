@@ -1,12 +1,10 @@
 package com.Ecomercial.CTTT2018.models.domain;
 
-
-
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,19 +13,13 @@ import javax.persistence.*;
 public class Brand {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
     private int id;
 
-    @Column(name = "name", nullable = false, updatable = false)
+    @Column(name = "name", nullable = false, updatable = true)
     private String name;
 
-    @Override
-    public String toString() {
-        return "Brand{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
+    @OneToMany(mappedBy = "brandObj")
+    private List<Product> products;
 }
