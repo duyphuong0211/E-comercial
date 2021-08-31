@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +27,32 @@ public class Store {
     @Column(name = "accepted", nullable = false)
     private boolean accepted;
 
+    @ManyToOne
+    protected UserStoreOwner userStoreOwner;
+
+    @OneToMany(mappedBy = "store")
+    protected List<StoreProduct> storeProducts;
+
+    public List<StoreProduct> getStoreProducts() {
+        return storeProducts;
+    }
+
+    public boolean addStoreProduct(StoreProduct storeProduct) {
+        if(storeProducts == null)
+            storeProducts = new ArrayList<>();
+        return storeProducts.add(storeProduct);
+    }
+
+    public boolean setStoreProducts(List<StoreProduct> storeProducts) {
+        this.storeProducts = storeProducts;
+        return true;
+    }
+
+    public UserStoreOwner getUserStoreOwner() {
+        return userStoreOwner;
+    }
+
+    public void setUserStoreOwner(UserStoreOwner userStoreOwner) {
+        this.userStoreOwner = userStoreOwner;
+    }
 }

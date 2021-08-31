@@ -1,14 +1,11 @@
 package com.Ecomercial.CTTT2018.models.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.List;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
-public class UserStoreOwner extends User {
+public class PhysicalStore extends Store {
 
-    @OneToMany(mappedBy = "userStoreOwner")
-    private List<Store> stores;
+    private String address;
 }
