@@ -26,7 +26,6 @@ import javax.validation.Valid;
 @Controller
 public class AdminController {
 
-    Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     /////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
     @Autowired
@@ -40,6 +39,7 @@ public class AdminController {
 
     @Autowired
     private AddProductFormValidator addProductFormValidator;
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
@@ -58,11 +58,13 @@ public class AdminController {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addbrand", method = RequestMethod.GET)
     public ModelAndView addBrand(@ModelAttribute("addBrandForm") AddBrandForm addBrandForm) {
-
-        logger.info("show addbrand page1");
         return new ModelAndView("admin/addbrand", "addBrandForm", addBrandForm);
     }
 
@@ -70,7 +72,6 @@ public class AdminController {
     @RequestMapping(value = "/admin/addbrand", method = RequestMethod.POST)
     public ModelAndView addBrand(@Valid @ModelAttribute("addBrandForm")AddBrandForm addBrandForm, BindingResult bindingResult)
     {
-        logger.info("show addbrand page2");
         if(bindingResult.hasErrors())
             return new ModelAndView("admin/addbrand","addBrandForm",addBrandForm);
         brandService.addBrand(addBrandForm);
@@ -80,21 +81,20 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.GET)
     public ModelAndView addProduct(@ModelAttribute("addProductForm") AddProductForm addProductForm) {
-
-        logger.info("show addproduct page");
         return new ModelAndView("admin/addproduct", "addProductForm", addProductForm);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.POST)
     public ModelAndView addProduct(@Valid @ModelAttribute("addProductForm") AddProductForm addProductForm, BindingResult bindingResult) {
-
-        logger.info("show addproduct page2");
         if (bindingResult.hasErrors())
             return new ModelAndView("admin/addproduct", "addProductForm", addProductForm);
-
         productService.addProduct(addProductForm);
-
         return new ModelAndView("redirect:/");
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
+
 }
