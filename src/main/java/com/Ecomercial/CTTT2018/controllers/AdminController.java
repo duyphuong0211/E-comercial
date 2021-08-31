@@ -2,13 +2,16 @@ package com.Ecomercial.CTTT2018.controllers;
 
 import com.Ecomercial.CTTT2018.forms.AddBrandForm;
 import com.Ecomercial.CTTT2018.forms.AddBrandFormValidator;
+import com.Ecomercial.CTTT2018.forms.AddCompanyForm;
 import com.Ecomercial.CTTT2018.forms.AddProductForm;
 import com.Ecomercial.CTTT2018.models.domain.Brand;
 import com.Ecomercial.CTTT2018.models.domain.Product;
 import com.Ecomercial.CTTT2018.models.domain.Store;
 import com.Ecomercial.CTTT2018.models.service.BrandService;
+import com.Ecomercial.CTTT2018.models.service.CompanyService;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
+import com.Ecomercial.CTTT2018.validators.AddCompanyFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddProductFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +39,9 @@ public class AdminController {
     private BrandService brandService;
 
     @Autowired
+    private CompanyService companyService;
+
+    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -47,20 +53,22 @@ public class AdminController {
     @Autowired
     private AddProductFormValidator addProductFormValidator;
 
+    @Autowired
+    private AddCompanyFormValidator addCompanyFormValidator;
+
     //	@Autowired
 //	private AddStoreFormValidator addStoreFormValidator;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
 
     @InitBinder("addBrandForm")
-    public void addBrandFormInitBinder(WebDataBinder binder) {
-        binder.addValidators(brandFormValidator); //This maps the add brand form to our own validator.
+    public void addBrandFormInitBinder(WebDataBinder binder) { //This maps the add brand form to our own validator.
+        binder.addValidators(brandFormValidator);
     }
 
-    @InitBinder("addProductForm")
-    public void AddProductFormInitBinder(WebDataBinder binder)
-    {
-        binder.addValidators(addProductFormValidator);
+    @InitBinder("addCompanyForm")
+    public void AddCompanyFormInitBinder(WebDataBinder binder){
+        binder.addValidators(addCompanyFormValidator);
     }
 
     //	@InitBinder("addStoreForm")
@@ -89,6 +97,24 @@ public class AdminController {
         if(bindingResult.hasErrors())
             return new ModelAndView("admin/addbrand","addBrandForm",addBrandForm);
         brandService.addBrand(addBrandForm);
+        return new ModelAndView("redirect:/");
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/admin/addcompany", method = RequestMethod.GET)
+    public ModelAndView addCompany(@ModelAttribute("addCompanyForm") AddCompanyForm addCompanyForm) {
+
+        return new ModelAndView("admin/addcompany", "addCompanyForm", addCompanyForm);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/admin/addcompany", method = RequestMethod.POST)
+    public ModelAndView addCompany(@Valid @ModelAttribute("addCompanyForm")AddCompanyForm addCompanyForm, BindingResult bindingResult)
+    {
+
+        if(bindingResult.hasErrors())
+            return new ModelAndView("admin/addcompany","addCompanyForm",addCompanyForm);
+        companyService.addCompany(addCompanyForm);
         return new ModelAndView("redirect:/");
     }
 
