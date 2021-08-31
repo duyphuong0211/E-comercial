@@ -7,11 +7,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
-@NoArgsConstructor
 @Getter
 @Setter
-@Entity     // This tells Hibernate to make a table out of this class
+@Entity
 @Table(name = "product")
+@Inheritance( strategy = InheritanceType.JOINED )
 public class Product {
 
     @Id
@@ -28,16 +28,23 @@ public class Product {
    /* @Column(name = "company", nullable = false, unique = false)
     private Company company;*/
 
-    @Column(name = "price", nullable = false, unique = false)
-    private Float price;
+    @Column(name = "averagePrice", nullable = false, unique = false)
+    private Float averagePrice;
 
     @Column(name = "dateTime", nullable = false, unique = false)
     private Date dateTime;
 
-    public Product(String name, String brand, Float price, Date dateTime) {
+    public Product(){
+        this.name = "";
+        this.brand = "";
+        this.averagePrice = 0f;
+        this.dateTime = null;
+    }
+
+    public Product(String name, String brand, Float averagePrice, Date dateTime) {
         this.name = name;
-        this.brand = brand;
-        this.price = price;
+        this.brand=brand;
+        this.averagePrice = averagePrice;
         this.dateTime = dateTime;
     }
 }

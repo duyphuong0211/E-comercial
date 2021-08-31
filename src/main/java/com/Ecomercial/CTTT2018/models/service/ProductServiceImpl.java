@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> getPriceBetween(double start,double end)
     {
-        return productRepository.findByPriceBetween(start,end);
+        return productRepository.findByAveragePriceBetween(start,end);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
         Product product=new Product();
         product.setBrand(productForm.getBrand());
         product.setName(productForm.getName());
-        product.setPrice(productForm.getPrice());
+        product.setAveragePrice(productForm.getPrice());
         product.setDateTime(new Date());
         return productRepository.save(product);
     }

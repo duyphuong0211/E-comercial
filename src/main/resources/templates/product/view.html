@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
@@ -10,7 +9,6 @@
     <!-- <link rel="stylesheet" th:href="@{/css/home.css}"> -->
   </th:block>
 </head>
-
 <!-- Body !-->
 <body layout:fragment="content">
 <!--Content Goes Here!-->
@@ -22,16 +20,14 @@
       <li class="list-group-item text-muted">Product's Info</li>
       <li class="list-group-item text-left"><span class="pull-right"><strong>Name: </strong></span><span th:text="${product.getName()}"></span></li>
       <li class="list-group-item text-left"><span class="pull-right"><strong>Brand: </strong></span><span th:text="${product.getBrand()}"></span></li>
-      <li class="list-group-item text-left"><span class="pull-right"><strong>Price: </strong></span><span th:text="${product.getPrice()}"></span></li>
+      <li class="list-group-item text-left"><span class="pull-right"><strong>Price: </strong></span><span th:text="${product.getAveragePrice()}"></span></li>
       <li class="list-group-item text-left"><span class="pull-right"><strong>Date Added: </strong></span><span th:text="${product.getDateTime()}"></span></li>
     </ul>
-
 
   </div>
 </div>
 <!--El Custom Scripts le el 7eta deh-->
 <th:block layout:fragment="customScripts">
-
 </th:block>
 </body>
 </html>
