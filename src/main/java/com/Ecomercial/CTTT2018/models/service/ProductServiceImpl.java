@@ -1,6 +1,7 @@
 package com.Ecomercial.CTTT2018.models.service;
 
 import com.Ecomercial.CTTT2018.forms.AddProductForm;
+import com.Ecomercial.CTTT2018.models.domain.PhysicalProduct;
 import com.Ecomercial.CTTT2018.models.domain.Product;
 import com.Ecomercial.CTTT2018.models.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(AddProductForm productForm) {
-        Product product=new Product();
+        //TODO Add Virtual/Physical Product
+
+        Product product = new PhysicalProduct();
         product.setBrand(productForm.getBrand());
         product.setName(productForm.getName());
         product.setAveragePrice(productForm.getPrice());

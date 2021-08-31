@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @Inheritance( strategy = InheritanceType.JOINED )
-public class Product {
+public abstract class Product {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
