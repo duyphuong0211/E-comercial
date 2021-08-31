@@ -15,7 +15,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String Index() {
 
-		logger.info("show HomePage");
+		logger.info("Home Controller: Show Home Pgae");
 
 		return "home/index";
 	}

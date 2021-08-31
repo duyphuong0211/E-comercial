@@ -44,7 +44,7 @@ public class AccountController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
 
-		logger.info("Show login page");
+		logger.info("Account Controller: Show login page");
 		return new ModelAndView("user/login", "error", error);
 	}
 
@@ -54,7 +54,7 @@ public class AccountController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView register(@ModelAttribute("registerForm") UserCreateForm registerForm) {
 
-		logger.info("Show register page");
+		logger.info("Account Controller: Show register page(Get)");
 		return new ModelAndView("user/register", "registerForm", registerForm);
 	}
 
@@ -62,7 +62,7 @@ public class AccountController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView register(@Valid @ModelAttribute("registerForm") UserCreateForm registerForm, BindingResult bindingResult, HttpServletRequest request) {
 
-		logger.info("Show register page");
+		logger.info("Account Controller: Show register page(Post)");
 		if (bindingResult.hasErrors())
 			return new ModelAndView("user/register", "registerForm", registerForm);
 
