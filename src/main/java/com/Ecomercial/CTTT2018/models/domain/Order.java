@@ -33,6 +33,9 @@ public class Order {
     @ManyToOne
     private StoreProduct storeProduct;
 
+    @ManyToOne
+    private ShoppingCart shoppingCart;
+
     //TODO Index this.
     @ManyToOne
     private User user;
