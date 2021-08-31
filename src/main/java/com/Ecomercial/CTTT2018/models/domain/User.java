@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,5 +35,8 @@ public class User {
 	@Column(name = "roles", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Collection<Role> roles;
+
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders;
 
 }
