@@ -9,9 +9,11 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 @Table(name = "store")
-public class Store {
+@Inheritance( strategy = InheritanceType.SINGLE_TABLE )
+@DiscriminatorColumn(name = "storeType")
+public abstract class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,18 +23,14 @@ public class Store {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "ownerId", nullable = false, unique = true)
-    private long ownerId;
-
     @Column(name = "accepted", nullable = false)
     private boolean accepted;
 
     @ManyToOne
-    protected UserStoreOwner userStoreOwner;
+    protected StoreOwner storeOwner;
 
     @OneToMany(mappedBy = "store")
     protected List<StoreProduct> storeProducts;
-
     public List<StoreProduct> getStoreProducts() {
         return storeProducts;
     }
@@ -46,13 +44,5 @@ public class Store {
     public boolean setStoreProducts(List<StoreProduct> storeProducts) {
         this.storeProducts = storeProducts;
         return true;
-    }
-
-    public UserStoreOwner getUserStoreOwner() {
-        return userStoreOwner;
-    }
-
-    public void setUserStoreOwner(UserStoreOwner userStoreOwner) {
-        this.userStoreOwner = userStoreOwner;
     }
 }

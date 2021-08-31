@@ -1,12 +1,13 @@
 package com.Ecomercial.CTTT2018.models.domain;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="id")
+@DiscriminatorValue(value = "virtual")
 public class VirtualStore extends Store {
 
     @Override
