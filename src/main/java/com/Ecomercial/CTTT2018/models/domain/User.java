@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "user")
+@Inheritance( strategy = InheritanceType.JOINED )
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false)
@@ -28,17 +29,10 @@ public class User {
 	@Column(name = "name", nullable = false, unique = false)
 	private String name;
 
-	@Column(name = "role", nullable = false)
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+	@JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "roles", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Collection<Role> roles;
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", email='" + email.replaceFirst("@.*", "@***") +
-				", passwordHash='" + passwordHash.substring(0, 10) +
-				", role=" + role +
-				'}';
-	}
 }

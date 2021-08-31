@@ -1,12 +1,13 @@
 package com.Ecomercial.CTTT2018.models.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
-
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity     // This tells Hibernate to make a table out of this class
@@ -33,15 +34,9 @@ public class Product {
     @Column(name = "dateTime", nullable = false, unique = false)
     private Date dateTime;
 
-    public Product(){
-        this.name = "";
-        this.brand = "";
-        this.price = 0f;
-        this.dateTime = null;
-    }
     public Product(String name, String brand, Float price, Date dateTime) {
         this.name = name;
-        this.brand=brand;
+        this.brand = brand;
         this.price = price;
         this.dateTime = dateTime;
     }

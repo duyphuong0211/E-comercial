@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 @Service
 public class BrandServiceImpl implements BrandService {
+
     @Autowired
     private BrandRepository brandRepository;
+
     @Autowired
     public BrandServiceImpl(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;

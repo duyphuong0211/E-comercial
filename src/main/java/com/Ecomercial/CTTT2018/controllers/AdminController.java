@@ -110,15 +110,15 @@ public class AdminController {
 
         logger.info("Admin Controller: show add product page(Post)");
         Collection<Brand>allBrands=brandService.getAllBrands();
-        ModelAndView mv=new ModelAndView("admin/addproduct");
+        ModelAndView mv = new ModelAndView("admin/addproduct");
         mv.addObject("addProductForm",addProductForm);
         mv.addObject("brands",allBrands);
         if (bindingResult.hasErrors())
             return mv;
 
         Product product=productService.addProduct(addProductForm);
-        long id=product.getId();
-        return new ModelAndView("redirect:/product/view/"+id);
+        long id = product.getId();
+        return new ModelAndView("redirect:/product/view"+id);
     }
 
     //@PreAuthorize("hasAuthority('ADMIN')")
