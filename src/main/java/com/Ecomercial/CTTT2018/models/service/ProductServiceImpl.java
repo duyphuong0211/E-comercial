@@ -3,6 +3,7 @@ package com.Ecomercial.CTTT2018.models.service;
 import com.Ecomercial.CTTT2018.forms.AddProductForm;
 import com.Ecomercial.CTTT2018.models.domain.PhysicalProduct;
 import com.Ecomercial.CTTT2018.models.domain.Product;
+import com.Ecomercial.CTTT2018.models.domain.VirtualProduct;
 import com.Ecomercial.CTTT2018.models.repository.BrandRepository;
 import com.Ecomercial.CTTT2018.models.repository.CompanyRepository;
 import com.Ecomercial.CTTT2018.models.repository.ProductRepository;
@@ -53,14 +54,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(AddProductForm productForm) {
-        //TODO Add Virtual/Physical Product
+        Product product;
+        if(productForm.getIsPhysicalProduct())
+        {
+            PhysicalProduct physicalProduct = new PhysicalProduct();
+            physicalProduct.setLength(productForm.getLength());
+            physicalProduct.setWidth (productForm.getWidth() );
+            physicalProduct.setHeight(productForm.getHeight());
+            physicalProduct.setWeight(productForm.getWeight());
+            product = physicalProduct;
+        }
+        else {
+            VirtualProduct virtualProduct = new VirtualProduct();
+            virtualProduct.setSerial(productForm.getSerial());
+            product = virtualProduct;
+        }
 
-        Product product=new PhysicalProduct();
+        //Common Attributes
         product.setBrand(brandRepository.findOneById(productForm.getBrandId()).get());
         product.setCompany(companyRepository.findOneById(productForm.getCompanyId()).get());
         product.setName(productForm.getName());
         product.setAveragePrice(productForm.getAveragePrice());
         product.setDateTime(new Date());
+
         return productRepository.save(product);
     }
 }
+

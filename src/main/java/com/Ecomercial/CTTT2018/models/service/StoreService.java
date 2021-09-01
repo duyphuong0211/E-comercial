@@ -1,7 +1,9 @@
 package com.Ecomercial.CTTT2018.models.service;
 
 
+import com.Ecomercial.CTTT2018.forms.AddStoreForm;
 import com.Ecomercial.CTTT2018.models.domain.Store;
+import com.Ecomercial.CTTT2018.models.domain.User;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -14,6 +16,5 @@ public interface StoreService {
 
     Collection<Store> getAllStores();
 
-    // TODO
-    //Store add(StoreCreateForm form);
+    Store add(AddStoreForm form, User user);
 }

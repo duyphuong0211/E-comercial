@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,6 +55,14 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	private Admin admin;
+
+	public void addRole(Role role) {
+
+		if(roles == null)
+			roles = new HashSet<>();
+
+		roles.add(role);
+	}
 
 	public User(Long Id, String username, String email, String passwordHash, String name, Set<Role> roles) {
 		this.id = Id;
