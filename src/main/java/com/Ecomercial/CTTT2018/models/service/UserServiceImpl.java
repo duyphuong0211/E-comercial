@@ -9,9 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,7 +22,7 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
-	public Optional<User> getUserById(long id) {
+	public Optional<User> getUserById(Long id) {
 		return Optional.empty();
 	}
 
@@ -51,9 +49,11 @@ public class UserServiceImpl implements UserService {
 		user.setUsername(form.getUsername());
 		user.setEmail(form.getEmail());
 		user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
+
 		//Create Roles List
-		Collection<Role> roles = new ArrayList<>();
+		Set<Role> roles = new HashSet<>();
 		roles.add(Role.USER);
+
 		//Add Roles List to User
 		user.setRoles(roles);
 		return userRepository.save(user);

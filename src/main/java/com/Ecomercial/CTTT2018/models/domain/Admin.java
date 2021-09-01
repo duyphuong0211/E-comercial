@@ -1,10 +1,21 @@
 package com.Ecomercial.CTTT2018.models.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Getter
+@Setter
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="id")
-public class Admin extends User {
+public class Admin {
+
+    @Id
+    private Long id;
+
+    @MapsId
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private User user;
 
 }
