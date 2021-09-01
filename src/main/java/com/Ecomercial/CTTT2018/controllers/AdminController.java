@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -142,25 +143,32 @@ public class AdminController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/admin/acceptStore/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/acceptstores", method = RequestMethod.GET)
+    public ModelAndView viewAppliedStore() {
+
+        Collection<Store> stores = storeService.getAllAppliedStores();
+        return new ModelAndView("admin/acceptStoreList", "stores", stores);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/admin/acceptstores/{id}", method = RequestMethod.GET)
     public ModelAndView viewAndAcceptStore(@PathVariable("id") long id) {
 
-        logger.info("Admin Controller: show accept store page(get)");
         Optional<Store> store = storeService.getStoreById(id);
+
         // If the store wasn't found
         if (!store.isPresent()) {
             return new ModelAndView("error/404");
         }
-        return new ModelAndView("store/accept", "store", store);
+
+        return new ModelAndView("admin/acceptstore", "store", store);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/admin/acceptStore/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/acceptstores/{id}", method = RequestMethod.POST)
     public ModelAndView acceptStore(@PathVariable("id") long id) {
-
-        logger.info("Admin Controller: show accept store page(post)");
         storeService.acceptStore(id);
-        return new ModelAndView("redirect:/"); // Temporary
+        return new ModelAndView("redirect:/admin/acceptstores"); // Temporary
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
