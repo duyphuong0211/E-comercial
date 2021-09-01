@@ -13,11 +13,6 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
-    @Autowired
-    public BrandServiceImpl(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
-
     @Override
     public Collection<Brand> getAllBrands() {
         return brandRepository.findAll();

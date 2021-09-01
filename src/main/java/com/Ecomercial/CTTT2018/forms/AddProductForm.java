@@ -14,8 +14,11 @@ public class AddProductForm {
     @NotEmpty
     private String name = "";
 
-    @NotEmpty
-    private String brand = "";
+    @NotNull
+    private Integer companyId;
+
+    @NotNull
+    private Integer brandId;
 
     @NotNull
     @Min(0)

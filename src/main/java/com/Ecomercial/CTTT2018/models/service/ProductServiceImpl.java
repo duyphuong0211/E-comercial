@@ -3,6 +3,8 @@ package com.Ecomercial.CTTT2018.models.service;
 import com.Ecomercial.CTTT2018.forms.AddProductForm;
 import com.Ecomercial.CTTT2018.models.domain.PhysicalProduct;
 import com.Ecomercial.CTTT2018.models.domain.Product;
+import com.Ecomercial.CTTT2018.models.repository.BrandRepository;
+import com.Ecomercial.CTTT2018.models.repository.CompanyRepository;
 import com.Ecomercial.CTTT2018.models.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,17 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
     public ProductServiceImpl(ProductRepository productRepository){this.productRepository = productRepository;}
 
 
     @Override
-    public Optional<Product> getProductById(long id) {
+    public Optional<Product> getProductById(Integer id) {
         return Optional.empty();
     }
 
@@ -32,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getPriceBetween(double start,double end)
+    public Optional<Product> getPriceBetween(Long start,Long end)
     {
         return productRepository.findByAveragePriceBetween(start,end);
     }
@@ -47,8 +55,9 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(AddProductForm productForm) {
         //TODO Add Virtual/Physical Product
 
-        Product product = new PhysicalProduct();
-        product.setBrand(productForm.getBrand());
+        Product product=new PhysicalProduct();
+        product.setBrand(brandRepository.findOneById(productForm.getBrandId()).get());
+        product.setCompany(companyRepository.findOneById(productForm.getCompanyId()).get());
         product.setName(productForm.getName());
         product.setAveragePrice(productForm.getAveragePrice());
         product.setDateTime(new Date());

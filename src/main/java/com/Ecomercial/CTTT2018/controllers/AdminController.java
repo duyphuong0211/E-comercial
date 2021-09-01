@@ -13,6 +13,7 @@ import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.validators.AddCompanyFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddProductFormValidator;
+import com.Ecomercial.CTTT2018.validators.AddProductViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class AdminController {
 
     @Autowired
     private AddCompanyFormValidator addCompanyFormValidator;
+
+    @Autowired
+    private AddProductViewModel addProductViewModel;
 
     //	@Autowired
 //	private AddStoreFormValidator addStoreFormValidator;
@@ -123,11 +127,7 @@ public class AdminController {
     public ModelAndView addProduct(@ModelAttribute("addProductForm") AddProductForm addProductForm) {
 
         logger.info("Admin Controller: show add product page(Get)");
-        Collection<Brand> allBrands=brandService.getAllBrands();
-        ModelAndView mv=new ModelAndView("admin/addproduct");
-        mv.addObject("addProductForm",addProductForm);
-        mv.addObject("brands",allBrands);
-        return mv;
+        return new ModelAndView("admin/addproduct", addProductViewModel.create(addProductForm));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -135,19 +135,15 @@ public class AdminController {
     public ModelAndView addProduct(@Valid @ModelAttribute("addProductForm") AddProductForm addProductForm, BindingResult bindingResult) {
 
         logger.info("Admin Controller: show add product page(Post)");
-        Collection<Brand>allBrands=brandService.getAllBrands();
-        ModelAndView mv = new ModelAndView("admin/addproduct");
-        mv.addObject("addProductForm",addProductForm);
-        mv.addObject("brands",allBrands);
         if (bindingResult.hasErrors())
-            return mv;
+            return new ModelAndView("admin/addproduct", addProductViewModel.create(addProductForm));
 
-        Product product=productService.addProduct(addProductForm);
-        long id = product.getId();
-        return new ModelAndView("redirect:/product/view"+id);
+        Product product = productService.addProduct(addProductForm);
+
+        return new ModelAndView("redirect:/product/view/"+product.getId());
     }
 
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/acceptStore/{id}", method = RequestMethod.GET)
     public ModelAndView viewAndAcceptStore(@PathVariable("id") long id) {
 
@@ -160,7 +156,7 @@ public class AdminController {
         return new ModelAndView("store/accept", "store", store);
     }
 
-    //	@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/admin/acceptStore/{id}", method = RequestMethod.POST)
     public ModelAndView acceptStore(@PathVariable("id") long id) {
 
