@@ -3,6 +3,7 @@ package com.Ecomercial.CTTT2018.forms;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 public class AddProductForm {
 
     @NotEmpty
-    @Size(max = 140, min = 3)
+    @Length(max = 140, min = 3)
     private String name = "";
 
     @NotNull

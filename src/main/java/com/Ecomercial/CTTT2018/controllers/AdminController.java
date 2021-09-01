@@ -9,6 +9,7 @@ import com.Ecomercial.CTTT2018.models.service.BrandService;
 import com.Ecomercial.CTTT2018.models.service.CompanyService;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
+import com.Ecomercial.CTTT2018.validators.AddBrandFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddCompanyFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddProductFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddProductViewModel;

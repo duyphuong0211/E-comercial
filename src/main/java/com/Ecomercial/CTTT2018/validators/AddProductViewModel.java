@@ -37,4 +37,4 @@ public class AddProductViewModel {
         return modelAndView;
     }
 }
-}
+
