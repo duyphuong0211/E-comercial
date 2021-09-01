@@ -2,6 +2,7 @@ package com.Ecomercial.CTTT2018.models.service;
 
 import com.Ecomercial.CTTT2018.forms.UserCreateForm;
 import com.Ecomercial.CTTT2018.models.domain.Role;
+import com.Ecomercial.CTTT2018.models.domain.ShoppingCart;
 import com.Ecomercial.CTTT2018.models.domain.User;
 import com.Ecomercial.CTTT2018.models.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,15 @@ public class UserServiceImpl implements UserService {
 
 		//Add Roles List to User
 		user.setRoles(roles);
+
+		//Create Shopping Cart
+		ShoppingCart shoppingCart = new ShoppingCart();
+
+		//Bidirectional Linking
+		user.setShoppingCart(shoppingCart);
+		user.getShoppingCart().setUser(user);
+
+		//Save da kolo
 		return userRepository.save(user);
 	}
 }

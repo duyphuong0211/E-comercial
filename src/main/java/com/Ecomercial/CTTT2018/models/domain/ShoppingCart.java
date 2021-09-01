@@ -13,11 +13,11 @@ import java.util.List;
 public class ShoppingCart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, updatable = false)
-    private long id;
+    private Long id;
 
+    @MapsId
     @OneToOne
+    @PrimaryKeyJoinColumn
     private User user;
 
     @OneToMany(mappedBy = "shoppingCart", orphanRemoval = false)
