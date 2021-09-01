@@ -27,20 +27,16 @@
                  th:field="*{name}" th:errorclass="is-invalid" />
           <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Unspecified Error</div>
         </div>
-
         <div class="form-group">
           <label class="col-form-label">Brand</label>
-          <!-- <input type="text" class="form-control" placeholder="Brand"
-                  th:field="*{brand}" th:errorclass="is-invalid" />-->
-          <select th:field="*{brand}" class="form-control">
-            <option  th:each="brand : ${brands}" th:value="${brand.name}" th:text="${brand.name}"></option>
-          </select>
-          <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Unspecified Error</div>-->
+          <input type="text" class="form-control" placeholder="Brand"
+                 th:field="*{brand}" th:errorclass="is-invalid" />
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Unspecified Error</div>
         </div>
 
         <div class="form-group">
-          <label class="col-form-label">Price</label>
-          <input type="text" class="form-control" placeholder="Price"
+          <label class="col-form-label">Average Price</label>
+          <input type="text" class="form-control" placeholder="Average Price"
                  th:field="*{averagePrice}" th:errorclass="is-invalid"/>
           <div class="invalid-feedback" th:if="${#fields.hasErrors('averagePrice')}" th:errors="*{averagePrice}">Unspecified Error</div>
         </div>
