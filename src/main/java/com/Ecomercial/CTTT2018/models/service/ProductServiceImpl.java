@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getPriceBetween(Long start,Long end)
+    public Optional<Product>getPriceBetween(Long start,Long end)
     {
         return productRepository.findByAveragePriceBetween(start,end);
     }

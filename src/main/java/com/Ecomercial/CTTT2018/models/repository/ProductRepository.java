@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Optional<Product> findByName(String name);
 
-    Optional<Product>   findByAveragePriceBetween(Float start, Float End);
+    Optional<Product>   findByAveragePriceBetween(Long start, Long End);
 
     List<Product> findAll();
 }

@@ -1,10 +1,8 @@
 package com.Ecomercial.CTTT2018.controllers;
 
 import com.Ecomercial.CTTT2018.forms.AddBrandForm;
-import com.Ecomercial.CTTT2018.forms.AddBrandFormValidator;
 import com.Ecomercial.CTTT2018.forms.AddCompanyForm;
 import com.Ecomercial.CTTT2018.forms.AddProductForm;
-import com.Ecomercial.CTTT2018.models.domain.Brand;
 import com.Ecomercial.CTTT2018.models.domain.Product;
 import com.Ecomercial.CTTT2018.models.domain.Store;
 import com.Ecomercial.CTTT2018.models.service.BrandService;
@@ -26,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Optional;
 
 
