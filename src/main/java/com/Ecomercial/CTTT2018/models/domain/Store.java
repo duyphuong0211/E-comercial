@@ -18,15 +18,15 @@ public abstract class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
-    private long id;
+    protected Long id;
 
     @Column(name = "name", nullable = false, unique = true)
-    private String name;
+    protected String name;
 
     @Column(name = "accepted", nullable = false)
-    private boolean accepted;
+    protected boolean accepted;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     protected StoreOwner storeOwner;
 
     @OneToMany(mappedBy = "store")
@@ -34,15 +34,9 @@ public abstract class Store {
     public List<StoreProduct> getStoreProducts() {
         return storeProducts;
     }
-
     public boolean addStoreProduct(StoreProduct storeProduct) {
         if(storeProducts == null)
             storeProducts = new ArrayList<>();
         return storeProducts.add(storeProduct);
-    }
-
-    public boolean setStoreProducts(List<StoreProduct> storeProducts) {
-        this.storeProducts = storeProducts;
-        return true;
     }
 }
