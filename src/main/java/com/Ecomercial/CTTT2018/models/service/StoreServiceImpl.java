@@ -21,11 +21,12 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Optional<Store> getStoreById(Long id) {
-        return Optional.ofNullable(storeRepository.findOne(id));
+        //return Optional.ofNullable(storeRepository.findOne(id));
+        return storeRepository.findById(id); // in new version istead usde findOn -> FindByID
     }
     @Override
     public void acceptStore(Long storeId) {
-        Optional<Store> store = Optional.ofNullable(storeRepository.findOne(storeId));
+        Optional<Store> store =storeRepository.findById(storeId);
         store.ifPresent(store1 -> {
             store1.setAccepted(true);
             storeRepository.save(store1);
@@ -59,7 +60,8 @@ public class StoreServiceImpl implements StoreService {
         store.setName(form.getName());
 
         //Add New Role to User (We query as session user can be outdated)
-        User user = userRepository.findOne(sessionUser.getId());
+        //User user = userRepository.findOne(sessionUser.getId()); replacement for findOne
+        User user = userRepository.findById(sessionUser.getId()).orElse(null);
 
         if(!user.getRoles().contains(Role.STORE_OWNER))
             user.addRole(Role.STORE_OWNER);

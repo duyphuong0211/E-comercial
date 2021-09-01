@@ -31,12 +31,15 @@ public abstract class Store {
 
     @OneToMany(mappedBy = "store")
     protected List<StoreProduct> storeProducts;
-    public List<StoreProduct> getStoreProducts() {
-        return storeProducts;
-    }
+
     public boolean addStoreProduct(StoreProduct storeProduct) {
         if(storeProducts == null)
             storeProducts = new ArrayList<>();
         return storeProducts.add(storeProduct);
+    }
+
+    public boolean setStoreProducts(List<StoreProduct> storeProducts) {
+        this.storeProducts = storeProducts;
+        return true;
     }
 }
