@@ -32,7 +32,7 @@ public class StoreServiceImpl implements StoreService {
     public void acceptStore(Long storeId) {
         Optional<Store> store =storeRepository.findById(storeId);
         store.ifPresent(store1 -> {
-            store1.setAccepted(true);
+            store1.setStatus(StoreStatus.ACCEPTED);
             storeRepository.save(store1);
         });
     }
@@ -44,17 +44,17 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Collection<Store> getAllAppliedStores() {
-        return storeRepository.findAllByAccepted(false);
+        return storeRepository.findAllByStatus(StoreStatus.PENDING);
     }
 
     @Override
     public 	Collection<Store> getAllAcceptedUserStores(Long storeOwnerId){
-        return storeRepository.findByStoreOwner_IdAndAccepted(storeOwnerId, true);
+        return storeRepository.findByStoreOwner_IdAndStatus(storeOwnerId, StoreStatus.ACCEPTED);
     }
 
     @Override
     public 	Collection<Store> getAllNotAcceptedUserStores(Long storeOwnerId){
-        return storeRepository.findByStoreOwner_IdAndAccepted(storeOwnerId, false);
+        return storeRepository.findByStoreOwner_IdAndStatus(storeOwnerId, StoreStatus.ACCEPTED);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class StoreServiceImpl implements StoreService {
             store = new VirtualStore();
 
         //Common Attributes
-        store.setAccepted(false);
+        store.setStatus(StoreStatus.PENDING);
         store.setName(form.getName());
 
         //Add New Role to User (We query as session user can be outdated)

@@ -6,6 +6,7 @@ import com.Ecomercial.CTTT2018.forms.AddStoreProductForm;
 import com.Ecomercial.CTTT2018.models.domain.Role;
 import com.Ecomercial.CTTT2018.models.domain.Store;
 import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
+import com.Ecomercial.CTTT2018.models.domain.StoreStatus;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.utilities.AuthUtil;
@@ -76,7 +77,7 @@ public class StoreController {
 
         Store store = storeTmp.get();
         //TODO use custom authorizor instead of hardcoding it here (lateR)
-        if(store.isAccepted() || currentUser.getRole().contains(Role.ADMIN) || store.getStoreOwner().getId() == currentUser.getId())
+        if(store.getStatus() == StoreStatus.ACCEPTED || currentUser.getRole().contains(Role.ADMIN) || store.getStoreOwner().getId() == currentUser.getId())
             return new ModelAndView("store/view", "store", store);
         else
             return new ModelAndView("error/403");
@@ -96,8 +97,8 @@ public class StoreController {
             return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
         StoreProduct storeProduct = storeService.addProductToStore(addStoreProductForm, currentUser.getUser());
 
-        //TODO LOGIC
-        return new ModelAndView("redirect:/admin/acceptstores");
+        //TODO Flash message Successful!
+        return new ModelAndView("redirect:/");
     }
 
 
