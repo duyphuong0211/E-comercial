@@ -2,14 +2,19 @@ package com.Ecomercial.CTTT2018.controllers;
 
 import com.Ecomercial.CTTT2018.auth.CurrentUser;
 import com.Ecomercial.CTTT2018.forms.AddStoreForm;
+import com.Ecomercial.CTTT2018.forms.AddStoreProductForm;
 import com.Ecomercial.CTTT2018.models.domain.Role;
 import com.Ecomercial.CTTT2018.models.domain.Store;
+import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.utilities.AuthUtil;
 import com.Ecomercial.CTTT2018.validators.AddStoreFormValidator;
+import com.Ecomercial.CTTT2018.validators.AddStoreProductFormValidator;
+import com.Ecomercial.CTTT2018.validators.AddStoreProductViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,13 +29,20 @@ public class StoreController {
     /////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
     @Autowired
     private StoreService storeService;
+
     @Autowired
-    private AddStoreFormValidator addStoreFormValidator;
+    private ProductService productService;
+
+    @Autowired
+    private AddStoreProductViewModel addStoreProductViewModel;
+
+    @Autowired
+    private AddStoreProductFormValidator addStoreProductFormValidator;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
-    @InitBinder("addStoreForm")
+    @InitBinder("addStoreProductForm")
     public void addBrandFormInitBinder(WebDataBinder binder) {
-        binder.addValidators(addStoreFormValidator);
+        binder.addValidators(addStoreProductFormValidator);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
@@ -67,6 +79,24 @@ public class StoreController {
             return new ModelAndView("store/view", "store", store);
         else
             return new ModelAndView("error/403");
+    }
+
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @RequestMapping(value = "/store/addproduct", method = RequestMethod.GET)
+    public ModelAndView addStoreProduct(@ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, CurrentUser currentUser) {
+        return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
+    }
+
+
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @RequestMapping(value = "/store/addproduct", method = RequestMethod.POST)
+    public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser) {
+        if(bindingResult.hasErrors())
+            return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
+
+
+        //TODO LOGIC
+        return new ModelAndView("redirect:/admin/acceptstores");
     }
 
 

@@ -28,7 +28,7 @@ public class ProductController {
 
     //@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/product/view/{id}", method = RequestMethod.GET)
-    public ModelAndView viewProduct(@PathVariable("id") Integer id) {
+    public ModelAndView viewProduct(@PathVariable("id") Long id) {
 
         logger.info("Product Controller: show product view page(get)");
         Optional<Product> product = productService.getProductById(id);
