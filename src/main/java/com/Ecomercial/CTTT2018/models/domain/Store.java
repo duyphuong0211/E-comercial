@@ -29,7 +29,7 @@ public abstract class Store {
     @ManyToOne(optional = false)
     protected StoreOwner storeOwner;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "store", orphanRemoval = true)
     protected List<StoreProduct> storeProducts;
 
     public boolean addStoreProduct(StoreProduct storeProduct) {

@@ -5,6 +5,7 @@ import com.Ecomercial.CTTT2018.forms.AddStoreForm;
 import com.Ecomercial.CTTT2018.forms.AddStoreProductForm;
 import com.Ecomercial.CTTT2018.models.domain.Role;
 import com.Ecomercial.CTTT2018.models.domain.Store;
+import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.utilities.AuthUtil;
@@ -93,7 +94,7 @@ public class StoreController {
     public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser) {
         if(bindingResult.hasErrors())
             return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
-
+        StoreProduct storeProduct = storeService.addProductToStore(addStoreProductForm, currentUser.getUser());
 
         //TODO LOGIC
         return new ModelAndView("redirect:/admin/acceptstores");

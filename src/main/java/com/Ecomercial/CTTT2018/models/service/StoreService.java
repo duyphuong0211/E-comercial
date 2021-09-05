@@ -2,7 +2,9 @@ package com.Ecomercial.CTTT2018.models.service;
 
 
 import com.Ecomercial.CTTT2018.forms.AddStoreForm;
+import com.Ecomercial.CTTT2018.forms.AddStoreProductForm;
 import com.Ecomercial.CTTT2018.models.domain.Store;
+import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
 import com.Ecomercial.CTTT2018.models.domain.User;
 
 import java.util.Collection;
@@ -23,4 +25,6 @@ public interface StoreService {
     Collection<Store> getAllNotAcceptedUserStores(Long storeOwnerId);
 
     Store add(AddStoreForm form, User user);
+
+    StoreProduct addProductToStore(AddStoreProductForm form, User user);
 }

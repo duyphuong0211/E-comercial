@@ -14,7 +14,7 @@ public class StoreProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
-    private long id;
+    private Long id;
 
     private float price;
 
@@ -24,7 +24,7 @@ public class StoreProduct {
     @ManyToOne
     private Store store;
 
-    @OneToMany(mappedBy = "storeProduct")
+    @OneToMany(mappedBy = "storeProduct", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 }
