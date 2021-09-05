@@ -23,8 +23,9 @@ public abstract class Store {
     @Column(name = "name", nullable = false, unique = true)
     protected String name;
 
-    @Column(name = "accepted", nullable = false)
-    protected boolean accepted;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    protected StoreStatus status;
 
     @ManyToOne(optional = false)
     protected StoreOwner storeOwner;
