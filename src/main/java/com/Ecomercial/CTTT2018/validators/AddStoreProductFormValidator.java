@@ -33,6 +33,9 @@ public class AddStoreProductFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         AddStoreProductForm form = (AddStoreProductForm) target;
+        //Avoid Querying DB if there is an error already.
+        if(errors.hasErrors())
+            return;
 
         Optional<Product> productOptional = productService.getProductById(form.getProductId());
         if(!productOptional.isPresent()) {
