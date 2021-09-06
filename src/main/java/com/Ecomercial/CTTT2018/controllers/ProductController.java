@@ -1,7 +1,9 @@
 package com.Ecomercial.CTTT2018.controllers;
 
 import com.Ecomercial.CTTT2018.models.domain.Product;
+import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
+import com.Ecomercial.CTTT2018.models.service.StoreProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    StoreProductService storeProductService;
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
@@ -32,6 +37,15 @@ public class ProductController {
 
         logger.info("Product Controller: show product view page(get)");
         Optional<Product> product = productService.getProductById(id);
+        if (!product.isPresent()) {
+            return new ModelAndView("error/404");
+        }
+        return new ModelAndView("product/view", "product", product.get());
+    }
+
+    @RequestMapping(value = "/store/products/{id}", method = RequestMethod.GET)
+    public ModelAndView viewStoreProduct(@PathVariable("id") Long id) {
+        Optional<StoreProduct> product = storeProductService.getProductById(id);
         if (!product.isPresent()) {
             return new ModelAndView("error/404");
         }
