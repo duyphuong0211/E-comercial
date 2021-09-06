@@ -1,7 +1,9 @@
 package com.Ecomercial.CTTT2018.controllers;
 
+import com.Ecomercial.CTTT2018.models.domain.PhysicalProduct;
 import com.Ecomercial.CTTT2018.models.domain.Product;
 import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
+import com.Ecomercial.CTTT2018.models.service.PhysicalProductService;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreProductService;
 import org.slf4j.Logger;
@@ -25,8 +27,10 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    StoreProductService storeProductService;
+    private StoreProductService storeProductService;
 
+    @Autowired
+    private PhysicalProductService physicalProductService;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////*  CONTROLLER ACTION  *///////////////////////////////////////////
@@ -49,7 +53,12 @@ public class ProductController {
         if (!product.isPresent()) {
             return new ModelAndView("error/404");
         }
-        return new ModelAndView("product/storeprodcutview", "product", product.get());
-
+        Optional<PhysicalProduct>physicalProduct=physicalProductService.getProductbyId(product.get().getProduct().getId());
+        ModelAndView mv=new ModelAndView("product/storeprodcutview");
+        product.get().getStore().getId();
+        mv.addObject("product",product.get());
+        if(physicalProduct.isPresent())
+            mv.addObject("physicalproduct",physicalProduct.get());
+        return mv;
     }
 }
