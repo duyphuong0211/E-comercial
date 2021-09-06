@@ -8,6 +8,7 @@ import com.Ecomercial.CTTT2018.models.domain.Store;
 import com.Ecomercial.CTTT2018.models.domain.StoreProduct;
 import com.Ecomercial.CTTT2018.models.domain.StoreStatus;
 import com.Ecomercial.CTTT2018.models.service.ProductService;
+import com.Ecomercial.CTTT2018.models.service.StoreProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.utilities.AuthUtil;
 import com.Ecomercial.CTTT2018.validators.AddStoreFormValidator;
@@ -32,15 +33,24 @@ public class StoreController {
     /////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
     @Autowired
     private StoreService storeService;
-
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private StoreProductService storeProductService;
 
     @Autowired
     private AddStoreProductViewModel addStoreProductViewModel;
 
     @Autowired
+    private StoreProductViewModel storeProductViewModel;
+
+    @Autowired
+    private StoreOwnerDashboardViewModel storeOwnerDashboardViewModel;
+
+    @Autowired
     private AddStoreProductFormValidator addStoreProductFormValidator;
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
     @InitBinder("addStoreProductForm")
@@ -58,24 +68,18 @@ public class StoreController {
     {
         if(bindingResult.hasErrors())
             return new ModelAndView("store/add","AddStoreForm",addStoreForm);
-
         Store store = storeService.add(addStoreForm, currentUser.getUser());
-
         if(true)
             //Add Role to Runtime Session
             AuthUtil.addRoleAtRuntime(Role.STORE_OWNER);
-
         return new ModelAndView("redirect:/store/view/"+store.getId());
     }
-
     @RequestMapping(value = "/store/view/{id}", method = RequestMethod.GET)
     public ModelAndView viewProduct(@PathVariable("id") Long id, CurrentUser currentUser) {
         Optional<Store> storeTmp = storeService.getStoreById(id);
-
         //TODO send 404 status code not just render error.
         if (!storeTmp.isPresent())
             return new ModelAndView("error/404");
-
         Store store = storeTmp.get();
         //TODO use custom authorizor instead of hardcoding it here (lateR)
         if(store.getStatus() == StoreStatus.ACCEPTED || currentUser.getRole().contains(Role.ADMIN) || store.getStoreOwner().getId() == currentUser.getId())
@@ -83,36 +87,36 @@ public class StoreController {
         else
             return new ModelAndView("error/403");
     }
-
     @PreAuthorize("hasAuthority('STORE_OWNER')")
     @RequestMapping(value = "/store/addproduct", method = RequestMethod.GET)
     public ModelAndView addStoreProduct(@ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, CurrentUser currentUser) {
         return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
     }
-
-
     @PreAuthorize("hasAuthority('STORE_OWNER')")
     @RequestMapping(value = "/store/addproduct", method = RequestMethod.POST)
     public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser) {
         if(bindingResult.hasErrors())
             return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
         StoreProduct storeProduct = storeService.addProductToStore(addStoreProductForm, currentUser.getUser());
-
         //TODO Flash message Successful!
         return new ModelAndView("redirect:/store/products/"+storeProduct.getId());
     }
-
     @PreAuthorize("hasAuthority('STORE_OWNER')")
     @RequestMapping(value = "/user/storeowner/dashbaord", method = RequestMethod.GET)
     public ModelAndView addStoreProduct(CurrentUser currentUser) {
-        Collection<Store> Accepted=storeService.getAllAcceptedUserStores(currentUser.getId());
-        Collection<Store>Pending=storeService.getAllPendingUserStores(currentUser.getId());
-        Collection<Store>Rejected=storeService.getAllNotAcceptedUserStores(currentUser.getId());
-        ModelAndView mv=new ModelAndView("store/dashboard");
-        mv.addObject("accepted",Accepted);
-        mv.addObject("pending",Pending);
-        mv.addObject("rejected",Rejected);
-        return mv;
+        return new ModelAndView("store/dashboard", storeOwnerDashboardViewModel.create(currentUser.getId()));
     }
+
+    @RequestMapping(value = "/store/products/{id}", method = RequestMethod.GET)
+    public ModelAndView viewStoreProduct(@PathVariable("id") Long id) {
+
+        Optional<StoreProduct> product = storeProductService.getProductById(id);
+
+        if (!product.isPresent())
+            return new ModelAndView("error/404");
+
+        return new ModelAndView("store/storeprodcutview", storeProductViewModel.create(product.get()));
+    }
+
 
 }
