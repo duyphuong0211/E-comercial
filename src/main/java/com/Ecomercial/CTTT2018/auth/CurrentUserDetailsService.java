@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CurrentUserDetailsService implements UserDetailsService {
+
 	@Autowired
 	private UserService userService;
 
