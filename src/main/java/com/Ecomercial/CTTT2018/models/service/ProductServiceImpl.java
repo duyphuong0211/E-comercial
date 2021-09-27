@@ -80,12 +80,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    public void incrementViews(Long productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        product.ifPresent(product1 -> {
-            product1.setView(product1.getView()+1);
-            productRepository.save(product1);
-        });
+    public void incrementViews(Product product) {
+        product.setView(product.getView()+1);
+        productRepository.save(product);
     }
 }
 

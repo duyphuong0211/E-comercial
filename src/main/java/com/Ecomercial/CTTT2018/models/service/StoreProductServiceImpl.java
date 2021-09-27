@@ -18,11 +18,8 @@ public class StoreProductServiceImpl implements StoreProductService {
         return storeProductRepository.findById(id);
     }
 
-    public void incrementViews(Long storeProductId) {
-        Optional<StoreProduct> product = storeProductRepository.findById(storeProductId);
-        product.ifPresent(product1 -> {
-            product1.setStoreViews(product1.getStoreViews()+1);
-            storeProductRepository.save(product1);
-        });
+    public void incrementViews(StoreProduct storeProduct) {
+        storeProduct.setStoreViews(storeProduct.getStoreViews()+1);
+        storeProductRepository.save(storeProduct);
     }
 }
