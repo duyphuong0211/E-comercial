@@ -23,6 +23,13 @@ public class HomeController {
 
 		logger.info("Home Controller: Show Home Page");
 
+		/*
+		* 	FlashMessages.danger("test test 1337", redirectAttributes);
+		FlashMessages.warning("test warning", redirectAttributes);
+		FlashMessages.info("test test 1337", redirectAttributes);
+		FlashMessages.success("SUCCESS", redirectAttributes);
+		*/
+
 		return "home/index";
 	}
 
