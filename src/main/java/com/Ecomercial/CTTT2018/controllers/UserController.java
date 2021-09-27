@@ -1,12 +1,15 @@
 package com.Ecomercial.CTTT2018.controllers;
 
 
+import com.Ecomercial.CTTT2018.auth.CurrentUser;
 import com.Ecomercial.CTTT2018.forms.UserCreateForm;
 import com.Ecomercial.CTTT2018.models.service.UserService;
 import com.Ecomercial.CTTT2018.validators.UserCreateFormValidator;
+import com.Ecomercial.CTTT2018.viewmodels.StoreOwnerDashboardViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,15 +22,19 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-public class AccountController {
+public class UserController {
 
-	Logger logger = LoggerFactory.getLogger(AccountController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	/////////////////////////*  SERVICES, REPOSITORIES AND VALIDATORS SECTION  */////////////////////////////
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private UserCreateFormValidator userCreateFormValidator;
+
+	@Autowired
+	private StoreOwnerDashboardViewModel storeOwnerDashboardViewModel;
+
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
@@ -78,6 +85,12 @@ public class AccountController {
 		}
 
 		return new ModelAndView("redirect:/");
+	}
+
+	@PreAuthorize("hasAuthority('STORE_OWNER')")
+	@RequestMapping(value = "/user/storeowner/dashbaord", method = RequestMethod.GET)
+	public ModelAndView addStoreProduct(CurrentUser currentUser) {
+		return new ModelAndView("store/dashboard", storeOwnerDashboardViewModel.create(currentUser.getId()));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////

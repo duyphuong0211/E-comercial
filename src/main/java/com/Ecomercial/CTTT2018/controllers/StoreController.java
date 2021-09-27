@@ -48,9 +48,6 @@ public class StoreController {
     private StoreProductViewModel storeProductViewModel;
 
     @Autowired
-    private StoreOwnerDashboardViewModel storeOwnerDashboardViewModel;
-
-    @Autowired
     private AddStoreProductFormValidator addStoreProductFormValidator;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,11 +100,7 @@ public class StoreController {
         //TODO Flash message Successful!
         return new ModelAndView("redirect:/store/products/"+storeProduct.getId());
     }
-    @PreAuthorize("hasAuthority('STORE_OWNER')")
-    @RequestMapping(value = "/user/storeowner/dashbaord", method = RequestMethod.GET)
-    public ModelAndView addStoreProduct(CurrentUser currentUser) {
-        return new ModelAndView("store/dashboard", storeOwnerDashboardViewModel.create(currentUser.getId()));
-    }
+
 
     @RequestMapping(value = "/store/products/{id}", method = RequestMethod.GET)
     public ModelAndView viewStoreProduct(@PathVariable("id") Long id) {
