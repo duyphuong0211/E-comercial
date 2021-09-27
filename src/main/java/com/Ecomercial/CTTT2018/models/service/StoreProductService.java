@@ -8,5 +8,6 @@ public interface StoreProductService {
 
     Optional<StoreProduct> getProductById(Long id);
 
+    void incrementViews(Long storeProductId);
 
 }

@@ -18,4 +18,6 @@ public interface ProductService {
 
     Product addProduct(AddProductForm productForm);
 
+    void incrementViews(Long productId);
+
 }

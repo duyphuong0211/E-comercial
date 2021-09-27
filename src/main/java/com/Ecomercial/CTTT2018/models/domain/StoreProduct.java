@@ -27,4 +27,10 @@ public class StoreProduct {
     @OneToMany(mappedBy = "storeProduct", cascade = CascadeType.ALL)
     private List<Order> orders;
 
+    @Column(name = "views", nullable = false, unique = false)
+    private int storeViews;
+
+    public StoreProduct() {
+        storeViews=0;
+    }
 }
