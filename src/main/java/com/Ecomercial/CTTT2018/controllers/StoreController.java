@@ -14,6 +14,8 @@ import com.Ecomercial.CTTT2018.utilities.AuthUtil;
 import com.Ecomercial.CTTT2018.validators.AddStoreFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddStoreProductFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddStoreProductViewModel;
+import com.Ecomercial.CTTT2018.viewmodels.StoreOwnerDashboardViewModel;
+import com.Ecomercial.CTTT2018.viewmodels.StoreProductViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

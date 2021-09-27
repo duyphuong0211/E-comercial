@@ -13,4 +13,5 @@ public class Cttt2018Application extends SpringBootServletInitializer {
 		SpringApplication.run(Cttt2018Application.class, args);
 	}
 
+
 }

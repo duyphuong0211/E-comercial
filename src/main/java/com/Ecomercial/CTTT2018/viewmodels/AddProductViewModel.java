@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-@Component
+@Component("AddProductViewModel")
 public class AddProductViewModel {
 
     @Autowired
@@ -16,6 +16,7 @@ public class AddProductViewModel {
 
     @Autowired
     CompanyService companyService;
+
     //Query for Brands/Companies using the view model!.
     public HashMap<String, Object> create(AddProductForm form) {
         HashMap<String, Object> model = new HashMap<>();
