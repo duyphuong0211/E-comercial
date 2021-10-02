@@ -26,6 +26,9 @@ public class Order {
     @Column(name = "quantity", nullable = false)
     private int quantity = 1;
 
+    @Column(name = "address",nullable = false)
+    private String address;
+
     //Processed true = bought by the user.
     @Column(name = "processed", nullable = false)
     private boolean processed = false;

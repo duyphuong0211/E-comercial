@@ -55,6 +55,9 @@ public class StoreController {
     @Autowired
     private StoreOwnerDashboardViewModel storeOwnerDashboardViewModel;
 
+    @Autowired
+    private AddOrderViewModel addOrderViewModel;
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
     @InitBinder("addStoreProductForm")
@@ -133,4 +136,26 @@ public class StoreController {
     }
 
 
+    @RequestMapping(value = "/store/products/{id}/buy", method = RequestMethod.GET)
+    public ModelAndView addStore(@PathVariable("id") Long id, @ModelAttribute("addOrderForm") AddOrderForm addOrderForm) {
+        Optional<StoreProduct> product = storeProductService.getProductById(id);
+        if (!product.isPresent())
+            return new ModelAndView("error/404");
+        return new ModelAndView("store/addorder", addOrderViewModel.create(addOrderForm,id));
+    }
+
+    @RequestMapping(value = "/store/products/{id}/buy", method = RequestMethod.POST)
+    public ModelAndView addStore(@PathVariable("id") Long id,@Valid @ModelAttribute("addOrderForm")AddOrderForm addOrderForm, BindingResult bindingResult, CurrentUser currentUser, RedirectAttributes redirectAttributes)
+    {
+        if(bindingResult.hasErrors())
+            return new ModelAndView("store/addorder","addOrderForm",addOrderForm);
+
+		/*Store store = storeService.add(addStoreForm, currentUser.getUser());
+		//Add Role to Runtime Session
+		AuthUtil.addRoleAtRuntime(Role.STORE_OWNER);
+		FlashMessages.info(store.getName() + " added to the platform and awaiting Admin approval!", redirectAttributes);*/
+
+
+        return new ModelAndView("index");
+    }
 }
