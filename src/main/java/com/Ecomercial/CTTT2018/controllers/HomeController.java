@@ -3,11 +3,14 @@ package com.Ecomercial.CTTT2018.controllers;
 
 import com.Ecomercial.CTTT2018.auth.CurrentUser;
 import com.Ecomercial.CTTT2018.models.repository.UserRepository;
+import com.Ecomercial.CTTT2018.viewmodels.HomePageModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -18,19 +21,12 @@ public class HomeController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@RequestMapping("/")
-	public String Index(CurrentUser currentUser) {
+	@Autowired
+	private HomePageModel homePageModel;
 
-		logger.info("Home Controller: Show Home Page");
-
-		/*
-		* 	FlashMessages.danger("test test 1337", redirectAttributes);
-		FlashMessages.warning("test warning", redirectAttributes);
-		FlashMessages.info("test test 1337", redirectAttributes);
-		FlashMessages.success("SUCCESS", redirectAttributes);
-		*/
-
-		return "home/index";
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView register() {
+		return new ModelAndView("home/index", homePageModel.create());
 	}
 
 }
