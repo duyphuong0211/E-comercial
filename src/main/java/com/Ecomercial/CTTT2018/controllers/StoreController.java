@@ -52,6 +52,9 @@ public class StoreController {
     @Autowired
     private AddStoreProductFormValidator addStoreProductFormValidator;
 
+    @Autowired
+    private StoreOwnerDashboardViewModel storeOwnerDashboardViewModel;
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////*  VALIDATORS BINDING SECTION  *//////////////////////////////////////
     @InitBinder("addStoreProductForm")
@@ -76,6 +79,7 @@ public class StoreController {
         FlashMessages.info(store.getName() + " added to the platform and awaiting Admin approval!", redirectAttributes);
         return new ModelAndView("redirect:/store/view/"+store.getId());
     }
+
     @RequestMapping(value = "/store/view/{id}", method = RequestMethod.GET)
     public ModelAndView viewProduct(@PathVariable("id") Long id, CurrentUser currentUser) {
         Optional<Store> storeTmp = storeService.getStoreById(id);
@@ -94,6 +98,7 @@ public class StoreController {
     public ModelAndView addStoreProduct(@ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, CurrentUser currentUser) {
         return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
     }
+
     @PreAuthorize("hasAuthority('STORE_OWNER')")
     @RequestMapping(value = "/store/addproduct", method = RequestMethod.POST)
     public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser, RedirectAttributes redirectAttributes) {
@@ -103,6 +108,12 @@ public class StoreController {
         //TODO Flash message Successful!
         FlashMessages.success("Success! " + storeProduct.getProduct().getName() + " Added to your store!", redirectAttributes);
         return new ModelAndView("redirect:/store/products/"+storeProduct.getId());
+    }
+
+    @PreAuthorize("hasAuthority('STORE_OWNER')")
+    @RequestMapping(value = "/store/statistics", method = RequestMethod.GET)
+    public ModelAndView viewStatistics(CurrentUser currentUser) {
+        return new ModelAndView("store/statistics", storeOwnerDashboardViewModel.create(currentUser.getId()));
     }
 
 
