@@ -11,6 +11,7 @@ import com.Ecomercial.CTTT2018.models.service.ProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreProductService;
 import com.Ecomercial.CTTT2018.models.service.StoreService;
 import com.Ecomercial.CTTT2018.utilities.AuthUtil;
+import com.Ecomercial.CTTT2018.utilities.FlashMessages;
 import com.Ecomercial.CTTT2018.validators.AddStoreFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddStoreProductFormValidator;
 import com.Ecomercial.CTTT2018.validators.AddStoreProductViewModel;
@@ -25,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -62,14 +64,16 @@ public class StoreController {
     public ModelAndView addStore(@ModelAttribute("addStoreForm") AddStoreForm addStoreForm) {
         return new ModelAndView("store/add", "addStoreForm", addStoreForm);
     }
+
     @RequestMapping(value = "/store/add", method = RequestMethod.POST)
-    public ModelAndView addStore(@Valid @ModelAttribute("addStoreForm")AddStoreForm addStoreForm, BindingResult bindingResult, CurrentUser currentUser)
+    public ModelAndView addStore(@Valid @ModelAttribute("addStoreForm")AddStoreForm addStoreForm, BindingResult bindingResult, CurrentUser currentUser, RedirectAttributes redirectAttributes)
     {
         if(bindingResult.hasErrors())
             return new ModelAndView("store/add","AddStoreForm",addStoreForm);
         Store store = storeService.add(addStoreForm, currentUser.getUser());
         //Add Role to Runtime Session
         AuthUtil.addRoleAtRuntime(Role.STORE_OWNER);
+        FlashMessages.info(store.getName() + " added to the platform and awaiting Admin approval!", redirectAttributes);
         return new ModelAndView("redirect:/store/view/"+store.getId());
     }
     @RequestMapping(value = "/store/view/{id}", method = RequestMethod.GET)
@@ -92,11 +96,12 @@ public class StoreController {
     }
     @PreAuthorize("hasAuthority('STORE_OWNER')")
     @RequestMapping(value = "/store/addproduct", method = RequestMethod.POST)
-    public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser) {
+    public ModelAndView addStoreProduct(@Valid @ModelAttribute("addStoreProductForm") AddStoreProductForm addStoreProductForm, BindingResult bindingResult, CurrentUser currentUser, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors())
             return new ModelAndView("store/addproduct", addStoreProductViewModel.create(addStoreProductForm, currentUser.getId()));
         StoreProduct storeProduct = storeService.addProductToStore(addStoreProductForm, currentUser.getUser());
         //TODO Flash message Successful!
+        FlashMessages.success("Success! " + storeProduct.getProduct().getName() + " Added to your store!", redirectAttributes);
         return new ModelAndView("redirect:/store/products/"+storeProduct.getId());
     }
 
